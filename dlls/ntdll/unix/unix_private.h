@@ -84,6 +84,7 @@ struct async_fileio
 {
     async_callback_t    *callback;
     struct async_fileio *next;
+    DWORD                size;
     HANDLE               handle;
 };
 
@@ -151,6 +152,7 @@ extern BOOL is_wow64 DECLSPEC_HIDDEN;
 extern struct ldt_copy __wine_ldt_copy DECLSPEC_HIDDEN;
 #endif
 
+extern BOOL disable_sfn DECLSPEC_HIDDEN;
 extern BOOL ac_odyssey DECLSPEC_HIDDEN;
 extern BOOL fsync_simulate_sched_quantum DECLSPEC_HIDDEN;
 extern BOOL alert_simulate_sched_quantum DECLSPEC_HIDDEN;
@@ -213,8 +215,6 @@ extern NTSTATUS system_time_precise( void *args ) DECLSPEC_HIDDEN;
 extern void *anon_mmap_fixed( void *start, size_t size, int prot, int flags ) DECLSPEC_HIDDEN;
 extern void *anon_mmap_alloc( size_t size, int prot ) DECLSPEC_HIDDEN;
 
-extern void *steamclient_handle_fault( LPCVOID addr, DWORD err ) DECLSPEC_HIDDEN;
-
 extern void virtual_init(void) DECLSPEC_HIDDEN;
 extern ULONG_PTR get_system_affinity_mask(void) DECLSPEC_HIDDEN;
 extern void virtual_get_system_info( SYSTEM_BASIC_INFORMATION *info, BOOL wow64 ) DECLSPEC_HIDDEN;
@@ -258,6 +258,7 @@ extern NTSTATUS signal_alloc_thread( TEB *teb ) DECLSPEC_HIDDEN;
 extern void set_thread_teb( TEB *teb ) DECLSPEC_HIDDEN;
 extern void signal_free_thread( TEB *teb ) DECLSPEC_HIDDEN;
 extern void signal_init_process(void) DECLSPEC_HIDDEN;
+extern void signal_init_early(void) DECLSPEC_HIDDEN;
 extern void DECLSPEC_NORETURN signal_start_thread( PRTL_THREAD_START_ROUTINE entry, void *arg,
                                                    BOOL suspend, TEB *teb ) DECLSPEC_HIDDEN;
 extern void DECLSPEC_NORETURN signal_exit_thread( int status, void (*func)(int), TEB *teb ) DECLSPEC_HIDDEN;
