@@ -1730,7 +1730,7 @@ static BOOL uridecodebin_parser_init_gst(struct wg_parser *parser)
     parser->decodebin = element;
 
     g_object_set(parser->decodebin, "uri", parser->uri, NULL);
-    g_object_set(parser->decodebin, "max-size-bytes", G_MAXUINT, NULL);
+    // g_object_set(parser->decodebin, "max-size-bytes", G_MAXUINT, NULL);
     g_signal_connect(element, "pad-added", G_CALLBACK(pad_added_cb), parser);
     g_signal_connect(element, "pad-removed", G_CALLBACK(pad_removed_cb), parser);
     g_signal_connect(element, "autoplug-select", G_CALLBACK(autoplug_select_cb), parser);
